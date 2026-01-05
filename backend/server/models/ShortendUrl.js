@@ -34,6 +34,5 @@ const shortendUrlSchema = new mongoose.Schema({
 
 shortendUrlSchema.pre('save', function(next) {
     this.id = this._id.toString();
-    next();
 });
 module.exports = mongoose.model('ShortendUrl', shortendUrlSchema, "shortend_urls");
