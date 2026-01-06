@@ -40,7 +40,13 @@ const DashBoard = () => {
                 setData(response.data.data);
             }
         } catch (error) {
-            toast.error(error.message || "Failed to fetch URL stats");
+            if(error.isAxiosError && error.response.status === 401){
+                AuthService.removeToken();
+                navigate('/user/login');
+            }
+            if(error.isAxiosError && error.response.status === 404){
+                toast.warning(error.response.data.message || "No URL stats found");
+            }
         }
     }
     fetchData();

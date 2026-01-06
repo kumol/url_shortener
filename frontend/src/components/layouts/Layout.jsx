@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
                     navigate('/user/login');
                 }
             }, 100);
-    }, [user, isLogedIn]);
+    }, []);
     return(
         <>
         <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-xl border-gray-200">

@@ -1,6 +1,6 @@
 import AuthService from "../../service/authService";
 import LogIn from "../containers/User/LogIn/LogIn";
-import Layout from "./Layout1";
+import Layout from "./Layout";
 const AuthGuard = ({ children }) => {
     const isAuthenticated = AuthService.getToken() !== null;
 
