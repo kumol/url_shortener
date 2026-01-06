@@ -35,8 +35,8 @@ class ShortendUrlService {
         return await ShortendUrl.countDocuments(query);
     }
 
-    async deleteShortendUrlById(id) {
-        return await ShortendUrl.deleteOne({ id: id });
+    async deleteShortendUrl(query) {
+        return await ShortendUrl.deleteOne(query);
     }
 };
 

@@ -1,5 +1,5 @@
 const ShortendUrlService = require('../services/ShortendUrlService');
-const { error, success } = require('../utils/httpresponse');
+const { error, success, notFound } = require('../utils/httpresponse');
 const ValidationService = require('../services/ValidationService');
 
 class ShortendUrlController {
@@ -11,6 +11,7 @@ class ShortendUrlController {
             }
             data.created_by = req.user.id;
             const result = await ShortendUrlService.createShortendUrl(data);
+            console.log(result);
             return success(res, result, "Shortened URL created successfully");
         } catch (err) {
             return error(res, err);
@@ -28,6 +29,9 @@ class ShortendUrlController {
             if (!shortendUrl) {
                 return error(res, "Shortened URL not found");
             }
+            if(shortendUrl.length === 0){
+                return notFound(res, [], "No shortened URLs found for this user");
+            };
             return success(res, shortendUrl, "Shortened URL stats retrieved successfully");
         } catch (err) {
             return error(res, err);
@@ -37,7 +41,7 @@ class ShortendUrlController {
     async deleteShortendUrl(req, res) {
         try {
             const shortUrlId = req.params.id;
-            const result = await ShortendUrlService.deleteShortendUrlById({id: shortUrlId});
+            const result = await ShortendUrlService.deleteShortendUrl({id: shortUrlId});
             if (result.deletedCount === 0) {
                 return error(res, "Shortened URL not found or already deleted");
             }

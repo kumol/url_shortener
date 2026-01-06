@@ -1,7 +1,10 @@
+import AxiosService from "../../../../service/axiosService"
 import { useState } from "react";
 import { Link } from "react-router";
-
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,9 +17,18 @@ const Register = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await AxiosService.post('user/register', formData);
+      if(response.status === 200 && response.data.success){
+        toast.success("Registration successful!");
+        navigate('/user/login');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Registration failed. Please try again.");
+    }
   };
 
   return (

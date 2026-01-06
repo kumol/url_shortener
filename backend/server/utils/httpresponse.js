@@ -16,8 +16,8 @@ const created = (res, data, message = "Resource created successfully") => {
     });
 }
 
-const error = (res, data, message = "An error occurred", statusCode = 500) => {
-    res.status(statusCode).json({
+const error = (res, data, message = "An error occurred") => {
+    res.status(500).json({
         status: 'error',
         success: false,
         message: data.message || message,
