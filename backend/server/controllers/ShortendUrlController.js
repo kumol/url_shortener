@@ -7,7 +7,7 @@ class ShortendUrlController {
         try {
             const data = req.body;
             if(await ValidationService.isAbleToCreateShortUrl(req.user.id) === false){
-                return error(res, "You have reached the limit for free users");
+                return error(res, {}, "You have reached the limit for free users", 422);
             }
             data.created_by = req.user.id;
             const result = await ShortendUrlService.createShortendUrl(data);

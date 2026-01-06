@@ -25,9 +25,9 @@ const UrlShortner = () => {
                 toast.error(response.data.message || "Failed to shorten URL. Please try again.");
             }
         } catch (error) {
-            console.log(error);
-            console.log(error.isAxiosError);
-            if(error.isAxiosError){
+          if(error.isAxiosError && error.response.status === 422){
+            toast.warning(error.response.data.message || "You have reached the limit for free users");
+          } else if(error.isAxiosError){
                 toast.error(error.response.data.message || "Failed to shorten URL. Please try again.");
             } else {
                 toast.error("Failed to shorten URL. Please try again.");
