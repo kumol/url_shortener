@@ -19,3 +19,5 @@ SECRET = "secret"
 FREE_USER_URL_LIMIT = 5
 BASE_URL = http://localhost:8080
 
+### http://localhost:8080/api-docs
+swagger docs url use baseurl and path /api-docs
