@@ -4,6 +4,7 @@ import AuthService from "../../../service/authService";
 import AxiosService from "../../../service/axiosService";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { Tooltip } from 'react-tooltip'
 
 const DashBoard = () => {
     const navigate = useNavigate();
@@ -71,6 +72,7 @@ const DashBoard = () => {
   };
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
+      <Tooltip id="my-tooltip" />
       <div className="overflow-x-auto bg-white rounded-2xl shadow">
         {data.length === 0 ? (
           <div className="p-6 text-center text-gray-500">
@@ -97,7 +99,7 @@ const DashBoard = () => {
                 className="hover:bg-indigo-50 transition"
               >
                 <td className="px-6 py-4 text-sm text-gray-700">{url.id}</td>
-                <td className="px-6 py-4 text-sm text-gray-700">{url.original_url}</td>
+                <td className="px-6 py-4 text-sm text-gray-700" data-tooltip-id= {url.original_url && url.original_url.length>40 ? "my-tooltip" :""} data-tooltip-content={url.original_url}>{url.original_url && url.original_url.length>40 ? url.original_url.substring(0, 40) + "..." : url.original_url}</td>
                 <td className="px-6 py-4 text-sm text-gray-700">{url.short_code}</td>
                 <td className="px-6 py-4 text-sm text-gray-700">{url.shortend_url}</td>
                 <td className="px-6 py-4 text-sm text-gray-700">{url.clicks}</td>
