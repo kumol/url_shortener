@@ -16,8 +16,8 @@ const created = (res, data, message = "Resource created successfully") => {
     });
 }
 
-const error = (res, data, message, statusCode) => {
-    res.status(statusCode || 500).json({
+const error = (res, data, message) => {
+    res.status(500).json({
         status: 'error',
         success: false,
         message: data.message || message,
@@ -27,6 +27,24 @@ const error = (res, data, message, statusCode) => {
 
 const notFound = (res, data, message = "Resource not found") => {
     res.status(404).json({
+        status: 'error',
+        success: false,
+        message,
+        data: data || null
+    });
+}
+
+const conflict = (res, data, message = "Conflict occurred") => {
+    res.status(409).json({
+        status: 'error',
+        success: false,
+        message,
+        data: data || null
+    });
+}
+
+const badRequest = (res, data, message = "Bad request", statusCode) => {
+    res.status(statusCode || 400).json({
         status: 'error',
         success: false,
         message,
@@ -58,5 +76,7 @@ module.exports = {
     error,
     notFound,
     unauthorized,
-    forbidden
+    forbidden,
+    conflict,
+    badRequest
 };

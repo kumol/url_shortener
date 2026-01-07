@@ -28,7 +28,7 @@ class ShortendUrlService {
     }
 
     async getShortendUrls(query, options){
-        return await ShortendUrl.find(query).sort({_id: -1}).lean();
+        return await ShortendUrl.find(query).sort({_id: -1}).lean().select('-__v -_id');
     }
 
     async countShortUrlsByUser(query){

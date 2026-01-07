@@ -5,6 +5,9 @@ dotenv.config();
 
 require('./server/models/db');
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -15,7 +18,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const apiRoutes = require('./server/api/index');
 const ShortendUrlService = require('./server/services/ShortendUrlService');
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec)
+);
+
 app.use('/api', apiRoutes);
+
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Health check endpoint
+ *     description: Returns a simple message indicating that the URL Shortener Backend is running.
+ *     tags:
+ *       - Health Check
+ *     responses:
+ *       200:
+ *         description: URL Shortener Backend is running
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: URL Shortener Backend is running  
+ */
 
 app.get('/', (req, res) => {
   res.send('URL Shortener Backend is running');

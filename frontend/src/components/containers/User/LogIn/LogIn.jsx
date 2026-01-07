@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import AxiosService from "../../../../service/axiosService"
 import AuthService from "../../../../service/authService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LogIn = () => {
     const navigate = useNavigate();
@@ -20,7 +21,12 @@ const LogIn = () => {
         }
         // Handle successful login, e.g., store token, redirect, etc.
         } catch (error) {
-        console.log(error);
+            if(error.isAxiosError && error.response && error.response.data){
+                console.log("Login error:" + error.response.data.message);
+                toast.error("Login error:" + error.response.data.message);
+            } else {
+                toast.error("An unexpected error occurred:", error);
+            }
         // Handle login error, e.g., show error message
         }
     };

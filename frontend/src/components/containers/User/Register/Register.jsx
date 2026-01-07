@@ -26,8 +26,13 @@ const Register = () => {
         navigate('/user/login');
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Registration failed. Please try again.");
+      if(error.status === 400){
+        toast.error(error.response.data.message || "Registration failed. Please check your input.");
+      } else if(error.isAxiosError && error.response && error.response.data){
+        toast.error("Registration error: " + error.response.data.message);
+      } else {
+        toast.error("An unexpected error occurred during registration.");
+      }
     }
   };
 
